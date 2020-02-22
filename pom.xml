@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+    <name>jsonwalk</name>
+    <artifactId>jsonwalk</artifactId>
+    <groupId>com.helkiah.jsonwalk</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <description>Treverse json using jsonpath queries.</description>
+
+    <url>https://github.com/example/test</url>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://spdx.org/licenses/MIT.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>Helkiah</name>
+        <url>http://example.com/</url>
+    </organization>
+
+    <scm>
+        <url>https://github.com/hamlinmark1/jsonwalk</url>
+        <connection>git@github.com:hamlinmark1/jsonwalk.git</connection>
+        <developerConnection>git@github.com:hamlinmark1/jsonwalk.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <system>Issues</system>
+        <url>https://github.com/hamlinmark1/jsonwalk/issues</url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>Pipelines</system>
+        <url>https://github.com/hamlinmark1/jsonwalk/pipelines</url>
+    </ciManagement>
+
+    <developers>
+        <developer>
+            <id>hamlinmark1</id>
+            <email>helkiah808@gmail.com</email>
+            <name>Mark Hamliin</name>
+            <organization>Helkiah</organization>
+            <organizationUrl>https://github.com/hamlinmark1</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>Europe/London</timezone>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <main.class>com.helkiah.jsonwalk.JsonWalk</main.class>
+        <java.version>11</java.version>
+        <junit.jupiter.version>5.4.2</junit.jupiter.version>
+        <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+        <maven.jar.plugin.version>3.1.1</maven.jar.plugin.version>
+        <maven.surefire.plugin.version>2.22.1</maven.surefire.plugin.version>
+        <slf4j.version>1.6.6</slf4j.version>
+        <logback.version>1.2.3</logback.version>
+        <graalvm.version>19.3.1</graalvm.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <!-- <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency> -->
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <!-- Attach the shade into the package phase -->
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.helkiah.jsonwalk.JsonWalk</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>1.1.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+
+        </plugins>
+    </build>
+</project>
