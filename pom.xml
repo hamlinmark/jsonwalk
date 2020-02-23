@@ -21,7 +21,7 @@
 
     <organization>
         <name>Helkiah</name>
-        <url>http://example.com/</url>
+        <url>https://github.com/hamlinmark1</url>
     </organization>
 
     <scm>
@@ -87,10 +87,12 @@
             <version>1.18.12</version>
         </dependency> -->
 
+        <!-- https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j -->
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-jdk14 -->
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.7.30</version>
         </dependency>
 
         <dependency>
@@ -112,6 +114,14 @@
                     <target>${java.version}</target>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
+                    <annotationProcessorPaths>
+                    <path>
+                        <groupId>info.picocli</groupId>
+                        <artifactId>picocli-codegen</artifactId>
+                        <version>4.2.0</version>
+                    </path>
+                    </annotationProcessorPaths>
+
                 </configuration>
             </plugin>
 
@@ -149,7 +159,27 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
+            <plugin>
+                <groupId>org.graalvm.nativeimage</groupId>
+                <artifactId>native-image-maven-plugin</artifactId>
+                <version>${graalvm.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>native-image</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>false</skip>
+                    <imageName>jsonwalk</imageName>
+                    <buildArgs>
+                         --no-fallback
+                         --report-unsupported-elements-at-runtime
+                    </buildArgs>
+                </configuration>
+            </plugin>
 
         </plugins>
     </build>
