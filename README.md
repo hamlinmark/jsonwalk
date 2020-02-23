@@ -1,4 +1,4 @@
-# Treverse JSON using JSONPath queries.
+# Traverse JSON using JSONPath queries.
 
 ## Examples
 
