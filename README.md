@@ -5,8 +5,9 @@
 ```bash
 # Get list off all Pikachu's move from internet and sort alphabetically
 curl "https://pokeapi.co/api/v2/pokemon/25/" 2>/dev/null | jsonwalk '$..move.name' | sort
+
 # Get list of books from json stored locally
-cat src/test/sample.json | java -jar target/jsonwalk-1.0.0-SNAPSHOT.jar   "$..book"
+cat src/test/sample.json | jsonwalker "$..book"
 ```
 
 
