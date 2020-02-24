@@ -47,7 +47,7 @@ public class JsonWalkStdInTest {
     @Test
     public void testStdInHelloWorld() {
         setupStdIn("{\"hello\":\"world\"}");
-        JsonWalk.main("$.hello");
+        JsonWalk.main( "--output=plain", "$.hello");
         String blah = getOutput();
         assertEquals("world\n", blah);
     }
@@ -58,9 +58,20 @@ public class JsonWalkStdInTest {
             getClass().getClassLoader().getResource("sample.json").getFile()
         );
         setupStdIn(file);
-        JsonWalk.main("$..book..category");
+        JsonWalk.main("$..book..category", "--output=plain");
         String blah = getOutput();
         assertEquals("reference\nfiction\nfiction\nfiction\n", blah);
+    }
+
+    @Test
+    public void testStdInBook() {
+        File file = new File(
+            getClass().getClassLoader().getResource("sample.json").getFile()
+        );
+        setupStdIn(file);
+        JsonWalk.main("$..book[?( @.title == \"Sayings of the Century\" )]");
+        String blah = getOutput();
+        assertEquals("[{\"category\":\"reference\",\"author\":\"Nigel Rees\",\"title\":\"Sayings of the Century\",\"price\":8.95}]\n", blah);
     }
 
 
